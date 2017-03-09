@@ -3,6 +3,7 @@
 #include "PlayerbotAIConfig.h"
 #include "PlayerbotFactory.h"
 #include "RandomPlayerbotMgr.h"
+#include "../game/Cache/CharacterCache.h"
 
 
 class LoginQueryHolder;
@@ -98,7 +99,7 @@ void PlayerbotHolder::OnBotLogin(Player * const bot)
         for (Group::MemberSlotList::const_iterator i = slots.begin(); i != slots.end(); ++i)
         {
             ObjectGuid member = i->guid;
-            uint32 account = sObjectMgr->GetPlayerAccountIdByGUID(member);
+            uint32 account = sCharacterCache->GetCharacterAccountIdByGuid(member);
             if (!sPlayerbotAIConfig.IsInRandomAccountList(account))
             {
                 groupValid = true;
@@ -125,7 +126,7 @@ string PlayerbotHolder::ProcessBotCommand(string cmd, ObjectGuid guid, bool admi
     if (!sPlayerbotAIConfig.enabled || guid.IsEmpty())
         return "bot system is disabled";
 
-    uint32 botAccount = sObjectMgr->GetPlayerAccountIdByGUID(guid);
+    uint32 botAccount = sCharacterCache->GetCharacterAccountIdByGuid(guid);
     bool isRandomBot = sRandomPlayerbotMgr.IsRandomBot(guid);
     bool isRandomAccount = sPlayerbotAIConfig.IsInRandomAccountList(botAccount);
     bool isMasterAccount = (masterAccountId == botAccount);

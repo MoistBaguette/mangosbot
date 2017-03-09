@@ -49,6 +49,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Metric.h"
+#include "../Cache/CharacterCache.h"
 
 // Playerbot mod:
 #include "../../plugins/playerbot/playerbot.h"
@@ -90,7 +91,7 @@ void PlayerbotHolder::AddPlayerBot(uint64 playerGuid, uint32 masterAccount)
 	if (bot && bot->IsInWorld())
         return;
 
-    uint32 accountId = sObjectMgr->GetPlayerAccountIdByGUID(ObjectGuid(playerGuid));
+    uint32 accountId = sCharacterCache->GetCharacterAccountIdByGuid(ObjectGuid(playerGuid));
     if (accountId == 0)
         return;
 
