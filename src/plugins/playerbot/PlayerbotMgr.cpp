@@ -304,7 +304,7 @@ list<string> PlayerbotHolder::HandlePlayerbotCommand(char const* args, Player* m
 				continue;
 
 			string bot;
-			if (sObjectMgr->GetPlayerNameByGUID(member, bot))
+			if (sCharacterCache->GetCharacterNameByGuid(member, bot))
 			    bots.insert(bot);
         }
     }
@@ -351,7 +351,7 @@ list<string> PlayerbotHolder::HandlePlayerbotCommand(char const* args, Player* m
         ostringstream out;
         out << cmdStr << ": " << bot << " - ";
 
-        ObjectGuid member = sObjectMgr->GetPlayerGUIDByName(bot);
+        ObjectGuid member = sCharacterCache->GetCharacterGuidByName(bot);
         if (!member)
         {
             out << "character not found";

@@ -11,6 +11,7 @@
 
 #include "../../plugins/ahbot/AhBotConfig.h"
 #include "RandomItemMgr.h"
+#include "../game/Cache/CharacterCache.h"
 
 char * strstri (const char* str1, const char* str2);
 
@@ -506,7 +507,7 @@ bool GuildTaskMgr::HandleConsoleCommand(ChatHandler* handler, char const* args)
     if (cmd.find("stats ") != string::npos)
     {
         string charName = cmd.substr(cmd.find("stats ") + 6);
-        ObjectGuid guid = sObjectMgr->GetPlayerGUIDByName(charName);
+        ObjectGuid guid = sCharacterCache->GetCharacterGuidByName(charName);
         if (!guid)
         {
             sLog->outMessage("gtask", LOG_LEVEL_ERROR, "Player %s not found", charName.c_str());
@@ -572,7 +573,7 @@ bool GuildTaskMgr::HandleConsoleCommand(ChatHandler* handler, char const* args)
     if (cmd.find("reward ") != string::npos)
     {
         string charName = cmd.substr(cmd.find("reward ") + 7);
-        ObjectGuid guid = sObjectMgr->GetPlayerGUIDByName(charName);
+        ObjectGuid guid = sCharacterCache->GetCharacterGuidByName(charName);
         if (!guid)
         {
             sLog->outMessage("gtask", LOG_LEVEL_ERROR, "Player %s not found", charName.c_str());
