@@ -85,7 +85,7 @@ public:
 void PlayerbotHolder::AddPlayerBot(uint64 playerGuid, uint32 masterAccount)
 {
     // has bot already been added?
-	Player* bot = sObjectMgr->GetPlayerByLowGUID(playerGuid);
+	Player* bot = ObjectAccessor::FindPlayerByLowGUID(playerGuid);
 
 	if (bot && bot->IsInWorld())
         return;

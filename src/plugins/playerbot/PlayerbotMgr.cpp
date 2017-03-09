@@ -132,7 +132,7 @@ string PlayerbotHolder::ProcessBotCommand(string cmd, ObjectGuid guid, bool admi
 
     if (isRandomAccount && !isRandomBot && !admin)
     {
-        Player* bot = sObjectMgr->GetPlayerByLowGUID(guid);
+        Player* bot = ObjectAccessor::FindPlayerByLowGUID(guid);
         if (bot->GetGuildId() != masterGuildId)
             return "not in your guild";
     }
@@ -142,7 +142,7 @@ string PlayerbotHolder::ProcessBotCommand(string cmd, ObjectGuid guid, bool admi
 
     if (cmd == "add" || cmd == "login")
     {
-        if (sObjectMgr->GetPlayerByLowGUID(guid))
+        if (ObjectAccessor::FindPlayerByLowGUID(guid))
             return "player already logged in";
 
         AddPlayerBot(guid.GetRawValue(), masterAccountId);
@@ -150,7 +150,7 @@ string PlayerbotHolder::ProcessBotCommand(string cmd, ObjectGuid guid, bool admi
     }
     else if (cmd == "remove" || cmd == "logout" || cmd == "rm")
     {
-        if (!sObjectMgr->GetPlayerByLowGUID(guid))
+        if (!ObjectAccessor::FindPlayerByLowGUID(guid))
             return "player is offline";
 
         if (!GetPlayerBot(guid.GetRawValue()))
