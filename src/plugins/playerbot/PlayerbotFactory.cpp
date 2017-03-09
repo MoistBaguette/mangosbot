@@ -1732,6 +1732,10 @@ void PlayerbotFactory::InitGuild()
         return;
     }
 
-    if (guild->GetMemberCount() < 10)
-        guild->AddMember(bot->GetGUID(), urand(GR_OFFICER, GR_INITIATE));
+	if (guild->GetMemberCount() < 10) {
+		SQLTransaction trans = CharacterDatabase.BeginTransaction();
+		guild->AddMember(trans, bot->GetGUID(), urand(GR_OFFICER, GR_INITIATE));
+		CharacterDatabase.CommitTransaction(trans);
+	}
+        
 }
