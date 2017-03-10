@@ -1511,6 +1511,7 @@ SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 a
     }
 
     // continent limitation (virtual continent)
+	/* CUSTOM COMFY: Remove Outland only Spells limitation
     if (HasAttribute(SPELL_ATTR4_CAST_ONLY_IN_OUTLAND))
     {
         if (strict)
@@ -1529,7 +1530,7 @@ SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 a
             if (!mapEntry || mapEntry->Expansion() < 1 || !mapEntry->IsContinent())
                 return SPELL_FAILED_INCORRECT_AREA;
         }
-    }
+    }*/
 
     // raid instance limitation
     if (HasAttribute(SPELL_ATTR6_NOT_IN_RAID_INSTANCE))
