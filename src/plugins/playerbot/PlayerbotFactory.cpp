@@ -145,8 +145,8 @@ void PlayerbotFactory::Randomize(bool incremental)
     sLog->outMessage("playerbot", LOG_LEVEL_INFO, "Initializing glyphs...");
     InitGlyphs();
 
-    sLog->outMessage("playerbot", LOG_LEVEL_INFO, "Initializing guilds...");
-    InitGuild();
+    //sLog->outMessage("playerbot", LOG_LEVEL_INFO, "Initializing guilds...");
+    //InitGuild();
 
     sLog->outMessage("playerbot", LOG_LEVEL_INFO, "Initializing pet...");
     InitPet();
