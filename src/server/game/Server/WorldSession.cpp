@@ -560,8 +560,10 @@ void WorldSession::LogoutPlayer(bool save)
 
         // remove player from the group if he is:
         // a) in group; b) not in raid group; c) logging out normally (not being kicked or disconnected)
-        if (_player->GetGroup() && !_player->GetGroup()->isRaidGroup() && m_Socket)
-            _player->RemoveFromGroup();
+        //if (_player->GetGroup() && !_player->GetGroup()->isRaidGroup() && m_Socket)
+        //    _player->RemoveFromGroup();
+				// Comfy Edit: Commenting this out solves the automatic removal of the player from the group when he logs out.
+				// This hopefully fixes the persistence issues.
 
         //! Send update to group and reset stored max enchanting level
         if (_player->GetGroup())
