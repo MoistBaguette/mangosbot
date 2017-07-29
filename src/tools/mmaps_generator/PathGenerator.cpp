@@ -16,9 +16,12 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/filesystem.hpp>
+
 #include "PathCommon.h"
 #include "MapBuilder.h"
 #include "Timer.h"
+#include "Banner.h"
 
 using namespace MMAP;
 
@@ -41,10 +44,7 @@ bool checkDirectories(bool debugOutput)
 
     dirFiles.clear();
     if (getDirContents(dirFiles, "mmaps") == LISTFILE_DIRECTORY_NOT_FOUND)
-    {
-        printf("'mmaps' directory does not exist\n");
-        return false;
-    }
+        return boost::filesystem::create_directory("mmaps");
 
     dirFiles.clear();
     if (debugOutput)
@@ -75,7 +75,7 @@ bool handleArgs(int argc, char** argv,
                char* &file,
                int& threads)
 {
-    char* param = NULL;
+    char* param = nullptr;
     for (int i = 1; i < argc; ++i)
     {
         if (strcmp(argv[i], "--maxAngle") == 0)
@@ -112,7 +112,7 @@ bool handleArgs(int argc, char** argv,
                 return false;
 
             char* stileX = strtok(param, ",");
-            char* stileY = strtok(NULL, ",");
+            char* stileY = strtok(nullptr, ",");
             int tilex = atoi(stileX);
             int tiley = atoi(stileY);
 
@@ -233,7 +233,7 @@ bool handleArgs(int argc, char** argv,
     return true;
 }
 
-int finish(const char* message, int returnValue)
+int finish(char const* message, int returnValue)
 {
     printf("%s", message);
     getchar(); // Wait for user input
@@ -242,6 +242,8 @@ int finish(const char* message, int returnValue)
 
 int main(int argc, char** argv)
 {
+    Trinity::Banner::Show("MMAP generator", [](char const* text) { printf("%s\n", text); }, nullptr);
+
     int threads = 3, mapnum = -1;
     float maxAngle = 70.0f;
     int tileX = -1, tileY = -1;
@@ -252,8 +254,8 @@ int main(int argc, char** argv)
          debugOutput = false,
          silent = false,
          bigBaseUnit = false;
-    char* offMeshInputPath = NULL;
-    char* file = NULL;
+    char* offMeshInputPath = nullptr;
+    char* file = nullptr;
 
     bool validParam = handleArgs(argc, argv, mapnum,
                                  tileX, tileY, maxAngle,
@@ -279,7 +281,7 @@ int main(int argc, char** argv)
         return silent ? -3 : finish("Press ENTER to close...", -3);
 
     MapBuilder builder(maxAngle, skipLiquid, skipContinents, skipJunkMaps,
-                       skipBattlegrounds, debugOutput, bigBaseUnit, offMeshInputPath);
+                       skipBattlegrounds, debugOutput, bigBaseUnit, mapnum, offMeshInputPath);
 
     uint32 start = getMSTime();
     if (file)
